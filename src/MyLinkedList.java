@@ -1,3 +1,7 @@
+import org.omg.CORBA.Any;
+
+import java.util.Iterator;
+
 /**
  * LinkedList class implements a doubly-linked list.
  */
@@ -82,6 +86,30 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         modCount++;
     }
 
+    public void addAll( Iterable<? extends AnyType> items )
+    {
+        Iterator<? extends AnyType> iter = items.iterator();
+        while ( iter.hasNext() )
+        {
+            add(iter.next());
+        }
+    }
+
+    public void removeAll(Iterable<? extends AnyType> items) {
+        AnyType item, element;
+
+        Iterator<? extends AnyType> iterItems = items.iterator();
+        while (iterItems.hasNext()) {
+            item = iterItems.next();
+            Iterator<? extends AnyType> iterList = iterator();
+            while (iterList.hasNext()) {
+                element = iterList.next();
+                if (element.equals(item))
+                    iterList.remove();
+            }
+        }
+    }
+
     public void addFirst(AnyType x) {
         addBefore(beginMarker.next, x);
     }
@@ -103,8 +131,9 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
     }
 
     public AnyType getLast() {
-        return get(size() - 1);
+        return get(size()-1);
     }
+
 
     /**
      * Returns the item at position idx.
