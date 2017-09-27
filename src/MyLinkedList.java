@@ -1,5 +1,3 @@
-import org.omg.CORBA.Any;
-
 import java.util.Iterator;
 
 /**
@@ -17,6 +15,19 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
     public MyLinkedList() {
         doClear();
     }
+
+
+    // beforeP is the cell before the two adjacent cells that are to be swapped.
+    // Error checks are omitted for clarity.
+
+    /**
+     * Adds an item to this collection, at specified position p.
+     * Items at or after that position are slid one position higher.
+     *
+     * @param p Node to add before.
+     * @param x any object.
+     * @throws IndexOutOfBoundsException if idx is not between 0 and size(), inclusive.
+     */
 
     private void clear() {
         doClear();
@@ -70,14 +81,6 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         addBefore(getNode(idx, 0, size()), x);
     }
 
-    /**
-     * Adds an item to this collection, at specified position p.
-     * Items at or after that position are slid one position higher.
-     *
-     * @param p Node to add before.
-     * @param x any object.
-     * @throws IndexOutOfBoundsException if idx is not between 0 and size(), inclusive.
-     */
     private void addBefore(Node<AnyType> p, AnyType x) {
         Node<AnyType> newNode = new Node<>(x, p.prev, p);
         newNode.prev.next = newNode;
@@ -86,14 +89,18 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         modCount++;
     }
 
-    public void addAll( Iterable<? extends AnyType> items )
-    {
+    // Exercise 3.9 addAll adds all items in the specified
+    // collection given by items to the end of the MyArrayList
+
+    public void addAll(Iterable<? extends AnyType> items) {
         Iterator<? extends AnyType> iter = items.iterator();
-        while ( iter.hasNext() )
-        {
+        while (iter.hasNext()) {
             add(iter.next());
         }
     }
+
+    //Method removeAll removes all items in the specified collection
+    // given by items from the MyLinkedList
 
     public void removeAll(Iterable<? extends AnyType> items) {
         AnyType item, element;
@@ -131,7 +138,7 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
     }
 
     public AnyType getLast() {
-        return get(size()-1);
+        return get(size() - 1);
     }
 
 
